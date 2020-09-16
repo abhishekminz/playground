@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Fb login example implementation</title>
+	</head>
+	<body>
+		<button onclick="obj.test()">Login with facebook</button>
+		<button onclick="obj.test2()">Logout</button>
+		<h1 id="name"></h1>
+		<script
+			async
+			defer
+			crossorigin="anonymous"
+			src="https://connect.facebook.net/en_US/sdk.js"
+		></script>
+		<script>
+			window.fbAsyncInit = function () {
+				console.log("It is getting initialized....");
+				FB.init({
+					appId: "1038425766586034",
+					autoLogAppEvents: true,
+					xfbml: true,
+					version: "v8.0",
+				});
+			};
+
+			var obj = {
+				login: function () {
+					console.log("Logging in...");
+					FB.login();
+				},
+				logout: function () {
+					console.log("Logging out...");
+				},
+			};
+		</script>
+	</body>
+</html>
