@@ -48,8 +48,10 @@
 				FB.api("/me", function (response) {
 					console.log(response);
 					console.log("Successful login for: " + response.name);
-					document.getElementById("status").innerHTML =
-						"Thanks for logging in, " + response.name + "!";
+					document.getElementById("name").innerHTML = "Name: " + response.name;
+					document.getElementById("email").innerHTML =
+						"Email: " + response.email;
+					document.getElementById("pf").src = response.picture.data.url;
 				});
 			}
 		</script>
@@ -59,7 +61,9 @@
 		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 		</fb:login-button>
 
-		<div id="status"></div>
+		<div id="name"></div>
+		<div id="email"></div>
+		<img id="pf" src="" alt="PF" />
 
 		<!-- Load the JS SDK asynchronously -->
 		<script
