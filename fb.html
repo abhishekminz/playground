@@ -29,29 +29,32 @@
 			var obj = {
 				login: function () {
 					console.log("Login clicked...");
-					FB.login(function (response) {
-						console.log("Login Response::", response);
-						if (response.authResponse) {
-							console.log("Welcome!  Fetching your information.... ");
-							FB.api(
-								"/me",
-								"GET",
-								{ fields: "id,name,email,picture{url}" },
-								function (response) {
-									console.log("Good to see you, " + response.name + ".");
-									console.log("Your email is, " + response.email + ".");
-									console.log(
-										"Check your profile picture link, " +
-											response.picture.data.url +
-											"."
-									);
-									localStorage.setItem("userName", response.name);
-								}
-							);
-						} else {
-							console.log("User cancelled login or did not fully authorize.");
-						}
-					});
+					FB.login(
+						function (response) {
+							console.log("Login Response::", response);
+							if (response.authResponse) {
+								console.log("Welcome!  Fetching your information.... ");
+								FB.api(
+									"/me",
+									"GET",
+									{ fields: "id,name,email,picture{url}" },
+									function (response) {
+										console.log("Good to see you, " + response.name + ".");
+										console.log("Your email is, " + response.email + ".");
+										console.log(
+											"Check your profile picture link, " +
+												response.picture.data.url +
+												"."
+										);
+										localStorage.setItem("userName", response.name);
+									}
+								);
+							} else {
+								console.log("User cancelled login or did not fully authorize.");
+							}
+						},
+						{ scope: "public_profile,email" }
+					);
 				},
 				logout: function () {
 					FB.logout(function (response) {
