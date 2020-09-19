@@ -6,8 +6,8 @@
 		<title>Fb login example implementation</title>
 	</head>
 	<body>
-		<button onclick="obj.test()">Login with facebook</button>
-		<button onclick="obj.test2()">Logout</button>
+		<button onclick="obj.login()">Login with facebook</button>
+		<button onclick="obj.logout()">Logout</button>
 		<h1 id="name"></h1>
 		<script
 			async
@@ -28,11 +28,35 @@
 
 			var obj = {
 				login: function () {
-					console.log("Logging in...");
-					FB.login();
+					console.log("Login clicked...");
+					FB.login(function (response) {
+						if (response.authResponse) {
+							console.log("Welcome!  Fetching your information.... ");
+							FB.api(
+								"/me",
+								"GET",
+								{ fields: "id,name,email,picture{url}" },
+								function (response) {
+									console.log("Good to see you, " + response.name + ".");
+									console.log("Your email is, " + response.email + ".");
+									console.log(
+										"Check your profile picture link, " +
+											response.picture.data.url +
+											"."
+									);
+									localStorage.setItem("userName", response.name);
+								}
+							);
+						} else {
+							console.log("User cancelled login or did not fully authorize.");
+						}
+					});
 				},
 				logout: function () {
-					console.log("Logging out...");
+					FB.logout(() => {
+						console.log("Logging out...");
+						localStorage.removeItem("userName");
+					});
 				},
 			};
 
@@ -42,6 +66,7 @@
 			// ) {
 			// 	// Insert your code here
 			// });
+			// https://abhishekminz.github.io/playground/
 		</script>
 	</body>
 </html>
