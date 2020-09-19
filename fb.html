@@ -53,7 +53,7 @@
 					});
 				},
 				logout: function () {
-					FB.logout(() => {
+					FB.logout(function (response) {
 						console.log("Logging out...");
 						localStorage.removeItem("userName");
 					});
